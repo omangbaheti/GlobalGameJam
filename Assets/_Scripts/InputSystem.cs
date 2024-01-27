@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,8 +14,19 @@ public class InputSystem : MonoBehaviour
     
     public bool jump;
     public bool sprint;
+    public bool cursorLocked = true;
     
     public bool cursorInputForLook = true;
+
+    private void Start()
+    {
+        CinemachineInputProvider cineInput = transform.parent.GetComponentInChildren<CinemachineInputProvider>();
+        cineInput.PlayerIndex = _playerInput.playerIndex;
+    }
+
+    
+    
+
     public void OnMove(InputValue value)
     {
         MoveInput(value.Get<Vector2>());
@@ -57,6 +70,11 @@ public class InputSystem : MonoBehaviour
         sprint = newSprintState;
     }
     
+
+    private void OnApplicationFocus(bool hasFocus)
+    {
+        SetCursorState(cursorLocked);
+    }
 
     private void SetCursorState(bool newState)
     {

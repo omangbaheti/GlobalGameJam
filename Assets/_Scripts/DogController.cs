@@ -65,6 +65,7 @@ using UnityEngine.InputSystem;
             float inputMagnitude = inputSystem.AnalogMovement ? inputSystem.move.magnitude : 1f;
             inputDirection3D = new Vector3(inputSystem.move.x, 0f, inputSystem.move.y).normalized * inputMagnitude;
             inputMagnitude = inputSystem.AnalogMovement ? inputSystem.look.magnitude : 1f;
+            Debug.Log(inputMagnitude);
             lookDirection3D = new Vector3(inputSystem.look.x, 0f, inputSystem.look.y).normalized * inputMagnitude;
         }
         
