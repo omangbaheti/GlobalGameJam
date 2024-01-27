@@ -7,11 +7,13 @@ public class InputSystem : MonoBehaviour
 {
     public Vector2 move;
     public Vector2 look;
+    public PlayerInput _playerInput;
+    public bool AnalogMovement => _playerInput.currentControlScheme != "KeyboardMouse";
+    
     public bool jump;
     public bool sprint;
     
     public bool cursorInputForLook = true;
-    
     public void OnMove(InputValue value)
     {
         MoveInput(value.Get<Vector2>());

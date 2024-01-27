@@ -1,98 +1,117 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+ using System;
+ using UnityEngine;
+#if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
+#endif
 
-public class DogController : MonoBehaviour
-{
-    //Properties
-    public float MoveSpeed = 2.0f;
-    public float SprintSpeed = 5.335f;
-    public float RotationSmoothTime = 2.0f;
-    public float AccelerationTime = 2f;
-    
-    //Variables for Keeping Track of  Speed
-    private float _speed;
-    private float _timeSinceStartedRunning;
-    private float _targetRotation;
-    private float _rotationVelocity;
-    
-    //Variables for GameObjects
-    private Camera _mainCamera;
-    private Animator _animationController;
-    private CharacterController _characterController;
-    private InputSystem _input;
-    private float _verticalVelocity = 0f;
 
-    private const float offset = 0.1f;
-    void Start()
+    public class DogController : MonoBehaviour
     {
-        _input = GetComponent<InputSystem>();
-        //_animationController = GetComponent<Animator>();
-        _characterController = GetComponent<CharacterController>();
-        _mainCamera = Camera.main;
-    }
-
-    private void OnValidate()
-    {
-        _input = GetComponent<InputSystem>();
-        //_animationController = GetComponent<Animator>();
-        _characterController = GetComponent<CharacterController>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        Move();
-    }
-
-    private void Move()
-    {
-        float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
-        Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
         
-        float currentVelocity = new Vector3(_characterController.velocity.x, 0.0f, _characterController.velocity.z).magnitude;
-        if (currentVelocity < targetSpeed - offset || currentVelocity > targetSpeed + offset)
+        [SerializeField] private float MaxSpeed;
+        [SerializeField] private float Acceleration;
+        [SerializeField] private float JumpHeight;
+        [SerializeField] private float RotationSmoothTime;
+       
+        //velocity
+        private Vector3 horizontalVelocity;
+        
+        //inputs
+        private Vector3 inputDirection3D;
+        private Vector3 lookDirection3D;
+        
+        //Gameobjects
+        private Rigidbody rigidBody;
+        private Camera playerCamera;
+        private InputSystem inputSystem;
+        
+        //constants
+        private float threshold = 0.1f;
+        private Vector3 forceDirection;
+        private float _rotationVelocity;
+
+        private void Awake()
         {
-            _timeSinceStartedRunning += Time.deltaTime;
-            _speed = Mathf.Lerp(currentVelocity, targetSpeed, Mathf.Sin(_timeSinceStartedRunning/AccelerationTime * Mathf.PI/2));
+            rigidBody = GetComponent<Rigidbody>();
+            playerCamera = transform.parent.GetComponentInChildren<Camera>();
+            inputSystem = GetComponent<InputSystem>();
+        }
+
+        private void Start()
+        {
             
         }
-        else
+
+        
+        private void FixedUpdate()
         {
-            _speed = targetSpeed;
-            _timeSinceStartedRunning = 0f;
+            SanitisedInputs();
+            Move();
+        }
+        
+
+        private void Update()
+        {
+            SanitisedInputs();
         }
 
-        if (_input.move.Equals(Vector2.zero))
+        private void LateUpdate()
         {
-            _timeSinceStartedRunning += Time.deltaTime;
-            _speed = Mathf.Lerp(currentVelocity, 0f,
-                Mathf.Sin(_timeSinceStartedRunning / AccelerationTime * Mathf.PI / 2));
-            if (currentVelocity.Equals(Vector3.zero))
+            
+        }
+
+        private void SanitisedInputs()
+        {
+            float inputMagnitude = inputSystem.AnalogMovement ? inputSystem.move.magnitude : 1f;
+            inputDirection3D = new Vector3(inputSystem.move.x, 0f, inputSystem.move.y).normalized * inputMagnitude;
+            inputMagnitude = inputSystem.AnalogMovement ? inputSystem.look.magnitude : 1f;
+            lookDirection3D = new Vector3(inputSystem.look.x, 0f, inputSystem.look.y).normalized * inputMagnitude;
+        }
+        
+        private void Move()
+        {
+            Vector3 cameraRight = RemoveYComponent(playerCamera.transform.right).normalized;
+            Vector3 cameraForward = RemoveYComponent(playerCamera.transform.forward).normalized;
+            
+            horizontalVelocity = new Vector3(rigidBody.velocity.x, 0, rigidBody.velocity.z);
+            if (horizontalVelocity.magnitude < MaxSpeed - threshold)
             {
+                //provides velocity
+                forceDirection += inputDirection3D.x * cameraRight * Acceleration;
+                forceDirection += inputDirection3D.z * cameraForward * Acceleration;
+                rigidBody.AddForce(forceDirection, ForceMode.Acceleration);
+                
+                //rotates the body
+                float targetAngle = Mathf.Atan2(inputDirection3D.x, inputDirection3D.z) * Mathf.Rad2Deg
+                                    + playerCamera.transform.eulerAngles.y;
+                float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _rotationVelocity,
+                    RotationSmoothTime);                
+
+                // rotate to face input direction relative to camera position
+                transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);                                
+                forceDirection = Vector3.zero;
+                
                 
             }
+            if (horizontalVelocity.sqrMagnitude > MaxSpeed * MaxSpeed)
+                rigidBody.velocity = horizontalVelocity.normalized * MaxSpeed + Vector3.up * rigidBody.velocity.y;
         }
-       
+
         
-        if (_input.move != Vector2.zero)
+
+        private Vector3 RemoveYComponent(Vector3 dir)
         {
-            _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg +
-                              _mainCamera.transform.eulerAngles.y;
-            float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity,
-                RotationSmoothTime);
-
-            // rotate to face input direction relative to camera position
-            transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
+            dir.y = 0;
+            return dir;
         }
-        
-        Vector3 targetDirection = (Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward).normalized;
 
-        _characterController.Move(targetDirection * (_speed * Time.deltaTime) +
-                         new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
+        private bool GroundCheck()
+        {
+            return false;
+        }
+
+        private void Jump()
+        {
+            
+        }
     }
-
-    
-}
