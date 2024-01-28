@@ -14,11 +14,13 @@ public class ShootingSystem : MonoBehaviour
     [SerializeField] Transform splatGunNozzle;
     [SerializeField] CinemachineFreeLook freeLookCamera;
     CinemachineImpulseSource impulseSource;
+    private PlayerStatsManager playerStatsManager;
 
     void Start()
     {
         input = GetComponent<InputSystem>();
         impulseSource = freeLookCamera.GetComponent<CinemachineImpulseSource>();
+        playerStatsManager = GetComponent<PlayerStatsManager>();
     }
 
     void Update()
@@ -33,7 +35,7 @@ public class ShootingSystem : MonoBehaviour
             //input.RotateToCamera(transform);
         }
 
-        if (pressing)
+        if (pressing && playerStatsManager.staminaRatio >0.01f)
             inkParticle.Play();
         else
             inkParticle.Stop();
