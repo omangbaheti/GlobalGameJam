@@ -5,10 +5,9 @@ using UnityEngine;
 public class Juice : MonoBehaviour
 {
     public float amplitude = 0.5f;  // Set the amplitude of the up and down movement
-    public float speed = 2.0f;      // Set the speed of the up and down movement
-
+    public float speed = 2.0f;
+    [Range(0, 1f)] public float stamina = 0.5f;// Set the speed of the up and down movement
     private bool hasCollided = false;
-
     private Vector3 startPos;
 
     void Start()
@@ -19,13 +18,8 @@ public class Juice : MonoBehaviour
     void Update()
     {
         // add stamina if collected
-        if (hasCollided)
+        if (!hasCollided)
         {
-            addStamina();
-        }
-        else
-        {
-            // Perform the up-and-down movement
             MoveUpDown();
         }
     }
@@ -39,22 +33,16 @@ public class Juice : MonoBehaviour
         transform.position = new Vector3(transform.position.x, newY, transform.position.z);
     }
 
-    void addStamina()
-    {
-        // Instantiate the UI image at the Juice's position
-        //GameObject uiImage = Instantiate(juiceUIPrefab, transform.position, Quaternion.identity);
-
-        // Destroy the Juice object
-        Destroy(gameObject);
-    }
-
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && !hasCollided)
         {
             hasCollided = true;
+            var statsManager = other.GetComponent<PlayerStatsManager>();
+            statsManager.AddStamina(stamina);
             Debug.Log("drinking juice!");
             AudioManager.instance.PlaySound("dog_drink", 10f);
+            Destroy(gameObject);
         }
     }
 }

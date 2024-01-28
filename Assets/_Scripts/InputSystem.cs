@@ -14,6 +14,7 @@ public class InputSystem : MonoBehaviour
     
     public bool jump;
     public bool sprint;
+    public bool shoot;
     public bool cursorLocked = true;
     
     public bool cursorInputForLook = true;
@@ -45,11 +46,17 @@ public class InputSystem : MonoBehaviour
         JumpInput(value.isPressed);
     }
 
+    public void OnShoot(InputValue value){
+        ShootInput(value.isPressed);
+    }
+
     public void OnSprint(InputValue value)
     {
         SprintInput(value.isPressed);
     }
-    
+    public void ShootInput(bool newShootState){
+        shoot = newShootState;
+    }
     public void MoveInput(Vector2 newMoveDirection)
     {
         move = newMoveDirection;
