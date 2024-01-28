@@ -19,7 +19,7 @@ using UnityEngine.InputSystem;
         [SerializeField] private float RotationSmoothTime;
        
         //velocity
-        private Vector3 horizontalVelocity;
+        public Vector3 horizontalVelocity;
         
         //inputs
         private Vector3 inputDirection3D;
