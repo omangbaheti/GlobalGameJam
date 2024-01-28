@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class TerritoryCalculator : Singleton<TerritoryCalculator>
 {
-    public float Player1Percent;
-    public float Player2Percent;
+    public float Player1Percent => player1Percentage;
+    public float Player2Percent => player2Percentage;
     
     [Range(0.01f, 100f)]
     [SerializeField] private float scale;

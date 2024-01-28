@@ -7,7 +7,7 @@ public class SplitScreenCanvasManager : MonoBehaviour
 {
     [SerializeField] private Slider staminaBar;
     [SerializeField] private HorizontalLayoutGroup foodBar;
-    
+    [SerializeField] private GameObject foodLogo;
     void Start()
     {
         
@@ -17,5 +17,23 @@ public class SplitScreenCanvasManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void SetStaminaBar(float ratio)
+    {
+        staminaBar.value = ratio;
+    }
+
+    public void SetFood(int foodNumber)
+    {
+        foreach (RectTransform foodItem in foodBar.transform)
+        {
+            Destroy(foodItem.gameObject);
+        }
+
+        for (int i = 0; i < foodNumber; i++)
+        {
+            Instantiate(foodLogo, foodBar.transform);
+        }
     }
 }

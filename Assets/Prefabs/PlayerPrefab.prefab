@@ -211,7 +211,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 218760318130221912}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.44950178, y: 0.036301225, z: -0.018285861, w: 0.89235425}
+  m_LocalRotation: {x: 0.4495018, y: 0.03630125, z: -0.018285876, w: 0.8923542}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -772,6 +772,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99fade71d8b936340ad7f0e6f52806ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Stamina: 0
+  Food: 0
+  maxStamina: 100
+  maxFood: 3
+  rateOfStaminaLoss: 0.1
 --- !u!1 &1539097457878627748
 GameObject:
   m_ObjectHideFlags: 0
@@ -1524,7 +1529,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6884290739451895097}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.44950175, y: 0.036301203, z: -0.018285852, w: 0.89235425}
+  m_LocalRotation: {x: 0.44950178, y: 0.03630126, z: -0.018285884, w: 0.8923542}
   m_LocalPosition: {x: -0.5249047, y: 4.408, z: 0.013217211}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
