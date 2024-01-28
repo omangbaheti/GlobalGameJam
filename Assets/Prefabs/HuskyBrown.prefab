@@ -792,6 +792,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8329391920022621311}
   - component: {fileID: 4227756539822017490}
+  - component: {fileID: 8803685806327604710}
   m_Layer: 0
   m_Name: HuskyBodyControl
   m_TagString: Untagged
@@ -831,7 +832,7 @@ Animator:
   m_GameObject: {fileID: 7842360851955115454}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 670a3d36fa06fb6409017d8941cabc79, type: 2}
+  m_Controller: {fileID: 9100000, guid: 13b69843271ad1f4f80278d73c6afe3c, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -842,3 +843,15 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8803685806327604710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7842360851955115454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 422f7708aac29ed4abdf0807e8b14d37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

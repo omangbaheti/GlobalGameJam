@@ -7,8 +7,8 @@ using Cinemachine;
 public class ShootingSystem : MonoBehaviour
 {
 
-    MovementInput input;
-
+    InputSystem input;
+    
     [SerializeField] ParticleSystem inkParticle;
     [SerializeField] Transform parentController;
     [SerializeField] Transform splatGunNozzle;
@@ -17,25 +17,25 @@ public class ShootingSystem : MonoBehaviour
 
     void Start()
     {
-        input = GetComponent<MovementInput>();
+        input = GetComponent<InputSystem>();
         impulseSource = freeLookCamera.GetComponent<CinemachineImpulseSource>();
     }
 
     void Update()
     {
         Vector3 angle = parentController.localEulerAngles;
-        input.blockRotationPlayer = Input.GetMouseButton(0);
-        bool pressing = Input.GetMouseButton(0);
+        //input.blockRotationPlayer = Input.GetMouseButton(0);
+        bool pressing = input.sprint;
 
-        if (Input.GetMouseButton(0))
+        if (pressing)
         {
-            VisualPolish();
-            input.RotateToCamera(transform);
+            //VisualPolish();
+            //input.RotateToCamera(transform);
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (pressing)
             inkParticle.Play();
-        else if (Input.GetMouseButtonUp(0))
+        else
             inkParticle.Stop();
 
         parentController.localEulerAngles
