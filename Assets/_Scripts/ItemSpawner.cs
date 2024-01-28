@@ -17,30 +17,34 @@ public class ItemSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SpawnObjects(spawnLocations);
+        
+        foreach (Transform spawn in spawnLocations)
+        {
+            SpawnObjects(spawn);
+        }
         //check if the item is collected
         StartCoroutine(CheckAndRespawn());
     }
 
-    void SpawnObjects(List<Transform> _spawnLocations)
+    void SpawnObjects(Transform _spawnLocation)
         {
-            foreach(Transform spawnTransform in _spawnLocations)
+            float randomProb = Random.Range(0f,1f);
+            if(randomProb < waterProbablilty)
             {
-                float randomProb = Random.Range(0f,1f);
-                if(randomProb < waterProbablilty)
-                {
-                    GameObject spawnedObject = Instantiate(juicePrefab[0], spawnTransform.position, Quaternion.Euler(-90,0,0), spawnTransform);
-                }
-                else
-                {
-                    GameObject spawnedObject = Instantiate(foodPrefab[0], spawnTransform.position, Quaternion.Euler(-90,0,0), spawnTransform);
-                }
+                GameObject spawnedObject = Instantiate(juicePrefab[0], _spawnLocation.position, Quaternion.Euler(-90,0,0), _spawnLocation);
+            }
+            else
+            {
+                GameObject spawnedObject = Instantiate(foodPrefab[0], _spawnLocation.position, Quaternion.Euler(-90,0,0), _spawnLocation);
             }
         }
 
-    IEnumerator CheckAndRespawn(){
-        while(true){
-            foreach(Transform currentTransform in spawnLocations){
+    IEnumerator CheckAndRespawn()
+    {
+        while(true)
+        {
+            foreach(Transform currentTransform in spawnLocations)
+            {
                 if (!HasChildren(currentTransform))
                 {
                     Debug.Log(currentTransform.name + " does not have children. Respawning in 5 seconds...");
@@ -49,7 +53,7 @@ public class ItemSpawner : MonoBehaviour
                     yield return new WaitForSeconds(10f);
 
                     // Respawn the prefab at the current transform position
-                    SpawnObjects(spawnLocations);
+                    SpawnObjects(currentTransform);
                 }
                 else
                 {
@@ -59,8 +63,8 @@ public class ItemSpawner : MonoBehaviour
 
             //add a delay between checking each transform
             yield return new WaitForSeconds(1f);
-            }
         }
+    }
 
     bool HasChildren(Transform parentTransform)
     {

@@ -9,6 +9,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: d1fa1f972c018014b9cf5e85f4f9668b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d1fa1f972c018014b9cf5e85f4f9668b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d1fa1f972c018014b9cf5e85f4f9668b, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d1fa1f972c018014b9cf5e85f4f9668b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -48,6 +60,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d1fa1f972c018014b9cf5e85f4f9668b, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: d1fa1f972c018014b9cf5e85f4f9668b, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -66,6 +82,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d1fa1f972c018014b9cf5e85f4f9668b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1078799574298829270}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d1fa1f972c018014b9cf5e85f4f9668b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4260823142357395356}
   m_SourcePrefab: {fileID: 100100000, guid: d1fa1f972c018014b9cf5e85f4f9668b, type: 3}
 --- !u!1 &9055701434559316113 stripped
 GameObject:
@@ -91,7 +110,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 150581138598605843, guid: d1fa1f972c018014b9cf5e85f4f9668b, type: 3}
 --- !u!54 &1078799574298829270
@@ -121,3 +140,15 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &4260823142357395356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9055701434559316113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76d4e91eba8444c4099e1ee4d81d7a77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
