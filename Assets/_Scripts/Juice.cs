@@ -54,6 +54,7 @@ public class Juice : MonoBehaviour
         {
             hasCollided = true;
             Debug.Log("drinking juice!");
+            AudioManager.instance.PlaySound("dog_drink", 10f);
         }
     }
 }

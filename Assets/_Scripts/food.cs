@@ -69,6 +69,7 @@ public class food : MonoBehaviour
         {
             hasCollided = true;
             Debug.Log("eating food!");
+            AudioManager.instance.PlaySound("dog_eat", 10f);
         }
     }
 }
