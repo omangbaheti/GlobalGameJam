@@ -1,5 +1,6 @@
  using System;
  using UnityEngine;
+ using UnityEngine.Serialization;
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
 #endif
@@ -7,10 +8,14 @@ using UnityEngine.InputSystem;
 
     public class DogController : MonoBehaviour
     {
+
+        public Vector3 Velocity => horizontalVelocity;
+        public Vector3 InputDirection3D => inputDirection3D;
+        public bool Grounded => _grounded;
         
         [SerializeField] private float MaxSpeed;
         [SerializeField] private float Acceleration;
-        [SerializeField] private float JumpHeight;
+        [SerializeField] private float JumpForce;
         [SerializeField] private float RotationSmoothTime;
        
         //velocity
@@ -29,7 +34,13 @@ using UnityEngine.InputSystem;
         private float threshold = 0.1f;
         private Vector3 forceDirection;
         private float _rotationVelocity;
-
+        
+        // Grounding Parameters
+        public float GroundedClearance = 0.65f;
+        
+        public LayerMask GroundLayers;
+        public float RoughTerrainOffset = -0.14f;
+        private bool _grounded;
         private void Awake()
         {
             rigidBody = GetComponent<Rigidbody>();
@@ -45,7 +56,8 @@ using UnityEngine.InputSystem;
         
         private void FixedUpdate()
         {
-            SanitisedInputs();
+            GroundedCheck();
+            Jump();
             Move();
         }
         
@@ -65,7 +77,6 @@ using UnityEngine.InputSystem;
             float inputMagnitude = inputSystem.AnalogMovement ? inputSystem.move.magnitude : 1f;
             inputDirection3D = new Vector3(inputSystem.move.x, 0f, inputSystem.move.y).normalized * inputMagnitude;
             inputMagnitude = inputSystem.AnalogMovement ? inputSystem.look.magnitude : 1f;
-            Debug.Log(inputMagnitude);
             lookDirection3D = new Vector3(inputSystem.look.x, 0f, inputSystem.look.y).normalized * inputMagnitude;
         }
         
@@ -91,14 +102,30 @@ using UnityEngine.InputSystem;
                 // rotate to face input direction relative to camera position
                 transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);                                
                 forceDirection = Vector3.zero;
-                
-                
             }
             if (horizontalVelocity.sqrMagnitude > MaxSpeed * MaxSpeed)
                 rigidBody.velocity = horizontalVelocity.normalized * MaxSpeed + Vector3.up * rigidBody.velocity.y;
         }
 
-        
+        private void Jump()
+        {
+            
+            if(Grounded && inputSystem.jump)
+            {
+                Debug.Log("Jump");
+                forceDirection += Vector3.up * JumpForce;
+            }
+        }
+
+        private void GroundedCheck()
+        {
+            Ray ray = new Ray(transform.position, Vector3.down);
+            if (Physics.Raycast(ray, out RaycastHit hit, GroundedClearance))
+                _grounded = true;
+            else
+                _grounded = false;
+        }
+    
 
         private Vector3 RemoveYComponent(Vector3 dir)
         {
@@ -106,13 +133,14 @@ using UnityEngine.InputSystem;
             return dir;
         }
 
-        private bool GroundCheck()
+        private void OnDrawGizmos()
         {
-            return false;
-        }
+            Color transparentGreen = new Color(0.0f, 1.0f, 0.0f, 0.35f);
+            Color transparentRed = new Color(1.0f, 0.0f, 0.0f, 0.35f);
 
-        private void Jump()
-        {
-            
+            if (Grounded) Gizmos.color = transparentGreen;
+            else Gizmos.color = transparentRed;
+            Vector3 direction = transform.TransformDirection(Vector3.down) * GroundedClearance;
+            Gizmos.DrawRay(transform.position, direction);
         }
     }
