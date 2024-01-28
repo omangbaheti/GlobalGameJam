@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class food : MonoBehaviour
+public class Food : MonoBehaviour
 {
     public float amplitude = 0.5f;  // Set the amplitude of the up and down movement
     public float speed = 2.0f;      // Set the speed of the up and down movement
