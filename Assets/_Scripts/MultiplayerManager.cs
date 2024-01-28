@@ -51,5 +51,6 @@ public class MultiplayerManager : MonoBehaviour
         int modelIndex = players.Count % characterPrefabs.Count;
         Instantiate(characterPrefabs[modelIndex], playerInput.transform.position, 
                                     Quaternion.identity, playerInput.transform);
+        
     }
 }
