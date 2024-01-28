@@ -64,29 +64,4 @@ public  class AudioManager : MonoBehaviour
         }
     }
 
-    public void Bark(){
-
-    }
-
-    public void GameEnds(){
-
-    }
-
-    public void Eat(){
-
-    }
-
-    public void Drink(){
-
-    }
-
-    public void Poop(){
-        PlaySound("fart1", 1f);
-
-    }
-
-    public void Pee(){
-
-    }
-
 }
