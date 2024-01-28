@@ -10,39 +10,44 @@ public class Projectile : MonoBehaviour
     public GameObject poop;
     public float projectileSpeed = 10f;
     private InputSystem inputSystem;
+
+    private PlayerStatsManager playerStatsManager;
     //public float coolDown;
     private bool hasFired = false;
 
 
     void Start()
     { 
-        inputSystem = GetComponentInParent<InputSystem>();   
+        inputSystem = GetComponentInParent<InputSystem>();
+        playerStatsManager = transform.parent.GetComponentInChildren<PlayerStatsManager>();
     }
 
     void Update()
     {
-        if( inputSystem.shoot && !hasFired){
+        if( inputSystem.shoot && !hasFired && playerStatsManager.Food >0)
+        {
             LaunchProjectile();
 
         }
-        shootingPoint = m_MainCamera.transform;    
+
+        shootingPoint = transform;
         //StartCoroutine(LaunchProjectile());
     }
 
     public void LaunchProjectile()
     {
         hasFired = true;
-        Vector3 shootingDirection = m_MainCamera.transform.forward;
         
         GameObject projectile = Instantiate(poop, shootingPoint.position, Quaternion.identity);
         Rigidbody projectileRb = projectile.GetComponent<Rigidbody>();
         
-        if(projectileRb != null){
-            projectileRb.velocity = shootingDirection * projectileSpeed;
+        if(projectileRb != null)
+        {
+            projectileRb.velocity = m_MainCamera.transform.forward * projectileSpeed;
         }
 
+        playerStatsManager.RemoveFood();
         Invoke("ResetFireFlag", 0.5f);
-
         //yield return new WaitForSeconds(coolDown);
     }
 

@@ -7,7 +7,7 @@ public class SceneLoader : MonoBehaviour
 {
     public void LoadGameScene()
     {
-        SceneManager.LoadScene("Level");
+        SceneManager.LoadScene("GameSceneOmang");
     }
 
     public void LoadMainMenu()

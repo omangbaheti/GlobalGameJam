@@ -36,7 +36,7 @@ public class GameManager : Singleton<GameManager>
 
     IEnumerator Timer()
     {
-        while (secondsLeft <= 0)
+        while (secondsLeft >= 0)
         {
             yield return new WaitForSeconds(1f);
             secondsLeft -= 1;
