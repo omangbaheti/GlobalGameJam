@@ -1,4 +1,5 @@
  using System;
+ using System.Collections;
  using UnityEngine;
  using UnityEngine.Serialization;
 #if ENABLE_INPUT_SYSTEM 
@@ -41,6 +42,7 @@ using UnityEngine.InputSystem;
         public LayerMask GroundLayers;
         public float RoughTerrainOffset = -0.14f;
         private bool _grounded;
+        public bool pooCollision;
         private void Awake()
         {
             rigidBody = GetComponent<Rigidbody>();
@@ -56,6 +58,12 @@ using UnityEngine.InputSystem;
         
         private void FixedUpdate()
         {
+            if (pooCollision)
+            {
+                float newY =  10f *(Mathf.Sin(5 * Time.time) -0.5f);
+                transform.rotation = Quaternion.Euler(transform.rotation.x, newY, transform.rotation.z);
+                return;
+            }
             GroundedCheck();
             Jump();
             Move();
@@ -124,6 +132,18 @@ using UnityEngine.InputSystem;
                 _grounded = true;
             else
                 _grounded = false;
+        }
+
+        public void OnCollisionWithPoo()
+        {
+            StartCoroutine(PooCollision());
+        }
+
+        IEnumerator PooCollision()
+        {
+            pooCollision = true;
+            yield return new WaitForSeconds(5f);
+            pooCollision = false;
         }
     
 
