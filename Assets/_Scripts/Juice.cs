@@ -7,7 +7,6 @@ public class Juice : MonoBehaviour
     public float amplitude = 0.5f;  // Set the amplitude of the up and down movement
     public float speed = 2.0f;      // Set the speed of the up and down movement
 
-    public GameObject juiceUIPrefab;  // Reference to the UI image prefab
     private bool hasCollided = false;
 
     private Vector3 startPos;
@@ -19,10 +18,10 @@ public class Juice : MonoBehaviour
 
     void Update()
     {
-        // Check if the UI image should appear
+        // add stamina if collected
         if (hasCollided)
         {
-            ShowUIImage();
+            addStamina();
         }
         else
         {
@@ -40,10 +39,10 @@ public class Juice : MonoBehaviour
         transform.position = new Vector3(transform.position.x, newY, transform.position.z);
     }
 
-    void ShowUIImage()
+    void addStamina()
     {
         // Instantiate the UI image at the Juice's position
-        GameObject uiImage = Instantiate(juiceUIPrefab, transform.position, Quaternion.identity);
+        //GameObject uiImage = Instantiate(juiceUIPrefab, transform.position, Quaternion.identity);
 
         // Destroy the Juice object
         Destroy(gameObject);
@@ -54,6 +53,7 @@ public class Juice : MonoBehaviour
         if (other.CompareTag("Player") && !hasCollided)
         {
             hasCollided = true;
+            Debug.Log("drinking juice!");
         }
     }
 }
