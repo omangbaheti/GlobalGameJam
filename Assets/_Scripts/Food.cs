@@ -19,16 +19,8 @@ public class Food : MonoBehaviour
 
     void Update()
     {
-        // Check if the UI image should appear
-        if (hasCollided)
-        {
-            ShowUIImage();
-        }
-        else
-        {
-            // Perform the up-and-down movement
+        if(!hasCollided)
             MoveUpDown();
-        }
     }
 
     void MoveUpDown()
@@ -40,36 +32,15 @@ public class Food : MonoBehaviour
         transform.position = new Vector3(transform.position.x, newY, transform.position.z);
     }
 
-    void ShowUIImage()
-    {
-        // Find the Canvas in the scene
-        Canvas canvas = FindObjectOfType<Canvas>();
-
-        // Check the number of existing food UI images on the canvas
-        int existingFoodCount = canvas.transform.childCount;
-
-        // Spawn UI image only if the max food number is not reached
-        if (existingFoodCount < 4)
-        {
-            // Instantiate the UI image on the Canvas
-            GameObject uiImage = Instantiate(foodUIPrefab, canvas.transform);
-
-            // Set the position of the UI image based on the number of existing food UI images
-            float distanceBetweenFood = 100f; // Adjust the distance as needed
-            RectTransform uiImageRect = uiImage.GetComponent<RectTransform>();
-            uiImageRect.anchoredPosition = new Vector2(existingFoodCount * distanceBetweenFood, 0f);
-        }
-        // Destroy the Juice object
-        Destroy(gameObject);
-    }
-
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && !hasCollided)
         {
-            hasCollided = true;
+            var statsManager = other.GetComponent<PlayerStatsManager>();
+            statsManager.AddFood();
             Debug.Log("eating food!");
             AudioManager.instance.PlaySound("dog_eat", 10f);
+            Destroy(gameObject);
         }
     }
 }

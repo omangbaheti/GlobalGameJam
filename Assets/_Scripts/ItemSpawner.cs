@@ -53,7 +53,7 @@ public class ItemSpawner : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log(currentTransform.name + " has children.");
+                    //Debug.Log(currentTransform.name + " has children.");
                 }
             }
 
