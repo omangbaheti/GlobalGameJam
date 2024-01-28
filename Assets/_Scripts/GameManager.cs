@@ -40,7 +40,11 @@ public class GameManager : Singleton<GameManager>
         {
             yield return new WaitForSeconds(1f);
             secondsLeft -= 1;
-            timer.text = secondsLeft.ToString(Mathf.FloorToInt(secondsLeft / 60) + ":" + Mathf.FloorToInt(secondsLeft % 60));
+
+            float minutes = Mathf.FloorToInt(secondsLeft / 60);
+            float seconds = Mathf.FloorToInt(secondsLeft % 60);
+
+            timer.text = string.Format("{0:00}:{1:00}", minutes, seconds);
         }
         SceneManager.LoadScene(2);
 
