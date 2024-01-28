@@ -63,7 +63,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 1031ceb6b55805a4a8f8850c500940bf, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: f7381543c78730542b5eac472c9ea0b5, type: 2}
+      objectReference: {fileID: 2100000, guid: 65cafa7d54887ed41b2e7bd2c9024cc2, type: 2}
     - target: {fileID: 919132149155446097, guid: 1031ceb6b55805a4a8f8850c500940bf, type: 3}
       propertyPath: m_Name
       value: apple juice_whitestrawGlow
@@ -102,6 +102,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   amplitude: 0.5
   speed: 1
+  stamina: 0.5
 --- !u!65 &8749539641299095158
 BoxCollider:
   m_ObjectHideFlags: 0
