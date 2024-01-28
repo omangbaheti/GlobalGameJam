@@ -1321,6 +1321,14 @@ PrefabInstance:
       propertyPath: m_MainCamera
       value: 
       objectReference: {fileID: 1925786211}
+    - target: {fileID: 5752351207105664268, guid: 2bc8e189c114f1242a0c0ef91ab10859, type: 3}
+      propertyPath: soundEffects.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5752351207105664268, guid: 2bc8e189c114f1242a0c0ef91ab10859, type: 3}
+      propertyPath: soundEffects.Array.data[4]
+      value: 
+      objectReference: {fileID: 8300000, guid: 3449495da21f354459ae3fb1b422beb1, type: 3}
     m_RemovedComponents:
     - {fileID: 3589696676796731818, guid: 2bc8e189c114f1242a0c0ef91ab10859, type: 3}
     m_RemovedGameObjects: []
@@ -1924,11 +1932,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5624683158292780393, guid: a7e99ff5a504dda48b5bd44b2193f858, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.022310836
+      value: -0.022310868
       objectReference: {fileID: 0}
     - target: {fileID: 5624683158292780393, guid: a7e99ff5a504dda48b5bd44b2193f858, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.007709508
+      value: 0.007709519
       objectReference: {fileID: 0}
     - target: {fileID: 6716853878258445551, guid: a7e99ff5a504dda48b5bd44b2193f858, type: 3}
       propertyPath: m_Name

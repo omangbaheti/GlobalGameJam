@@ -13,5 +13,6 @@ public class SceneLoader : MonoBehaviour
     public void LoadMainMenu()
     {
         SceneManager.LoadScene("StartMenu");
+        AudioManager.instance.PlaySound("menu-startgame", 15f);
     }
 }
