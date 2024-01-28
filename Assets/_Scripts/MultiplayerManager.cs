@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 
 public class MultiplayerManager : MonoBehaviour
 {
+    [SerializeField] private List<GameObject> characterPrefabs;
     [SerializeField]
     private List<PlayerInput> players = new List<PlayerInput>();
     [SerializeField]
@@ -38,7 +39,7 @@ public class MultiplayerManager : MonoBehaviour
         //need to use the parent due to the structure of the prefab
         Transform playerParent = playerInput.transform.parent;
         playerParent.position = startingPoints[players.Count - 1].position;
-
+        
         //convert layer mask (bit) to an integer 
         int layerToAdd = (int)Mathf.Log(playerLayers[players.Count - 1].value, 2);
 
@@ -47,7 +48,9 @@ public class MultiplayerManager : MonoBehaviour
         //add the layer
         playerParent.GetComponentInChildren<Camera>().cullingMask |= 1 << layerToAdd;
         //set the action in the custom cinemachine Input Handler
-        //playerParent.GetComponentInChildren<InputHandler>().horizontal = player.actions.FindAction("Look");
-
+        //playerParent.GetComponentInChildren<InputHandler>().horizontal = playerInput.actions.FindAction("Look");
+        int modelIndex = players.Count % characterPrefabs.Count;
+        Instantiate(characterPrefabs[modelIndex], playerInput.transform.position, 
+                                    Quaternion.identity, playerInput.transform);
     }
 }
