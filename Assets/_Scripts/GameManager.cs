@@ -2,6 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
 public class GameManager : Singleton<GameManager>
@@ -35,12 +36,13 @@ public class GameManager : Singleton<GameManager>
 
     IEnumerator Timer()
     {
-        while (true)
+        while (secondsLeft <= 0)
         {
             yield return new WaitForSeconds(1f);
             secondsLeft -= 1;
             timer.text = secondsLeft.ToString(Mathf.FloorToInt(secondsLeft / 60) + ":" + Mathf.FloorToInt(secondsLeft % 60));
         }
+        SceneManager.LoadScene(2);
 
     }
 
