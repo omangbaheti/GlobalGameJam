@@ -110,6 +110,7 @@ using UnityEngine.InputSystem;
                 // rotate to face input direction relative to camera position
                 transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);                                
                 forceDirection = Vector3.zero;
+                AudioManager.instance.PlaySound($"footsteps1", 10f);
             }
             if (horizontalVelocity.sqrMagnitude > MaxSpeed * MaxSpeed)
                 rigidBody.velocity = horizontalVelocity.normalized * MaxSpeed + Vector3.up * rigidBody.velocity.y;
