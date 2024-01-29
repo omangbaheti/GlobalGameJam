@@ -45,8 +45,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c12d7ad5a2609dc4eb01735431aa05e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_MainCamera: {fileID: 0}
   soundEffects:
-  - {fileID: 8300000, guid: 8851f877e055cd74e998819598847022, type: 3}
+  - {fileID: 8300000, guid: 08d8922f340161143ab74cfc463694c6, type: 3}
+  - {fileID: 8300000, guid: ae321b44a076d0b4abe7752c7e0f5410, type: 3}
+  - {fileID: 8300000, guid: cb1ff85a5c4eccc4d8e4a14feb2c37e1, type: 3}
+  - {fileID: 8300000, guid: ccca17da6c4f8c9448eb275cb7205d48, type: 3}
   backgroundMusicSource: {fileID: 2970251509267778487}
 --- !u!1 &4893054296275574135
 GameObject:
@@ -90,9 +94,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 3d31ba93134981b4689287e51df33f8f, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0
   m_Pitch: 1
   Loop: 1
   Mute: 0

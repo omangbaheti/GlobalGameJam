@@ -37,6 +37,8 @@ public class Projectile : MonoBehaviour
     public void LaunchProjectile()
     {
         hasFired = true;
+        AudioManager.instance.PlaySound("squish1", 15f);
+        AudioManager.instance.PlaySound("fart-long", 15f);
         
         GameObject projectile = Instantiate(poop, shootingPoint.position, Quaternion.identity);
         Rigidbody projectileRb = projectile.GetComponent<Rigidbody>();

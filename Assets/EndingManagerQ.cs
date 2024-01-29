@@ -21,6 +21,7 @@ public class EndingManagerQ : MonoBehaviour
             playerOne.transform.GetChild(0).gameObject.SetActive(true);
             playerTwo.transform.GetChild(1).gameObject.SetActive(true);
             playerOneText.enabled = true;
+            AudioManager.instance.PlaySound("Impressive_Goodboy", 15f);
         }
         else
         {

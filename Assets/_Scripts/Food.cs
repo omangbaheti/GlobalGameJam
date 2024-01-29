@@ -39,6 +39,8 @@ public class Food : MonoBehaviour
             var statsManager = other.GetComponent<PlayerStatsManager>();
             statsManager.AddFood();
             Debug.Log("eating food!");
+            AudioManager.instance.PlaySound("powerup1", 15f);
+            Debug.Log("eating food sound!");
             AudioManager.instance.PlaySound("dog_eat", 10f);
             Destroy(gameObject);
         }
