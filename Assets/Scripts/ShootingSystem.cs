@@ -35,8 +35,11 @@ public class ShootingSystem : MonoBehaviour
             //input.RotateToCamera(transform);
         }
 
-        if (pressing && playerStatsManager.staminaRatio >0.01f)
+        if (pressing && playerStatsManager.staminaRatio > 0.01f)
+        {
             inkParticle.Play();
+            AudioManager.instance.PlaySound("peeing-more-bubbly", 10f);
+        }
         else
             inkParticle.Stop();
 

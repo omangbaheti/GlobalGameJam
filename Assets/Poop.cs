@@ -11,6 +11,7 @@ public class Poop : MonoBehaviour
         {
             var controller = trigger.transform.GetComponent<DogController>();
             controller.OnCollisionWithPoo();
+            AudioManager.instance.PlaySound("squish1" ,10f);
             Destroy(gameObject);
         }
     }
