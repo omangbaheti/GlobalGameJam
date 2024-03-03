@@ -189,7 +189,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   amplitude: 0.5
   speed: 1
-  stamina: 0.5
+  stamina: 0.66
 --- !u!65 &8749539641299095158
 BoxCollider:
   m_ObjectHideFlags: 0

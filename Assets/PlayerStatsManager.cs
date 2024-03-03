@@ -54,6 +54,7 @@ public class PlayerStatsManager : MonoBehaviour
     public void RemoveStamina()
     {
         Stamina -= rateOfStaminaLoss * maxStamina * Time.deltaTime;
+        Stamina = Mathf.Clamp(Stamina,0f, maxStamina);
     }
 
     public void AddFood()
