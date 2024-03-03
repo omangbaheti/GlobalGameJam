@@ -359,6 +359,10 @@ PrefabInstance:
       value: AudioManager
       objectReference: {fileID: 0}
     - target: {fileID: 5752351207105664268, guid: 2bc8e189c114f1242a0c0ef91ab10859, type: 3}
+      propertyPath: keepAlive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5752351207105664268, guid: 2bc8e189c114f1242a0c0ef91ab10859, type: 3}
       propertyPath: soundEffects.Array.size
       value: 2
       objectReference: {fileID: 0}

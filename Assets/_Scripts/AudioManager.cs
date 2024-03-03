@@ -1,40 +1,62 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
-public  class AudioManager : MonoBehaviour
+public  class AudioManager : Singleton<AudioManager>
 {
-    public static AudioManager instance;
     public AudioClip[] soundEffects;
-    public AudioSource backgroundMusicSource;  // AudioSource specifically for background music
-
-
+    public AudioSource backgroundMusicSource;
+    public AudioSource sfxSource;// AudioSource specifically for background music
+    bool isPlaying;
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        keepAlive = false;
     }
 
-    public void PlaySound(string soundName, float volume = 1f)
+    public void PlaySoundWait(string soundName, float volume, float waitDelay = 0f)
     {
-        AudioClip clip = FindAudioClip(soundName);
+        StartCoroutine(PlaySound(soundName, volume, waitDelay));
 
-        if (clip != null)
+    }
+
+    public IEnumerator PlaySound(string soundName, float volume = 1f, float waitDelay = 0f)
+    {
+        yield return new WaitForSeconds(waitDelay);
+        AudioClip clip = FindAudioClip(soundName);
+        PlaySoundImmediate(soundName, volume);
+    }
+
+    //other sfx
+    public void PlaySoundImmediate(string soundName, float volume = 1f)
+    {
+        AudioClip sfx = FindAudioClip(soundName);
+
+        if (sfx != null)
         {
-            AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position, volume);
+            AudioSource.PlayClipAtPoint(sfx, Camera.main.transform.position, volume);
+
         }
         else
         {
-            Debug.LogWarning("Audio clip not found: " + soundName);
+            Debug.LogWarning("sfx not found: " + soundName);
         }
     }
+
+    //for footsteps and shooting
+    public void PlaySoundPersistent(string soundName, float volume = 1f)
+    {
+        AudioClip sfx = FindAudioClip(soundName);
+
+        if (sfxSource != null)
+        {
+            sfxSource.clip = sfx;
+            sfxSource.volume = volume;
+            sfxSource.Play();
+        }
+    }
+    
 
     private AudioClip FindAudioClip(string soundName)
     {

@@ -15,6 +15,7 @@ public class ShootingSystem : MonoBehaviour
     [SerializeField] CinemachineFreeLook freeLookCamera;
     CinemachineImpulseSource impulseSource;
     private PlayerStatsManager playerStatsManager;
+    private bool isShootSFXPlaying = false;
 
     void Start()
     {
@@ -37,11 +38,21 @@ public class ShootingSystem : MonoBehaviour
 
         if (pressing && playerStatsManager.staminaRatio > 0.01f)
         {
+            if (!isShootSFXPlaying && !AudioManager.instance.sfxSource.isPlaying)
+            {
+                isShootSFXPlaying = true;
+                AudioManager.instance.PlaySoundPersistent("peeing-more-bubbly", 10f);
+                
+            }
             inkParticle.Play();
-            AudioManager.instance.PlaySound("peeing-more-bubbly", 10f);
         }
         else
+        {
+            isShootSFXPlaying = false;
             inkParticle.Stop();
+            AudioManager.instance.sfxSource.Stop();
+        }
+
 
         parentController.localEulerAngles= new Vector3(Mathf.LerpAngle(parentController.localEulerAngles.x, pressing ? RemapCamera(freeLookCamera.m_YAxis.Value, 0, 1, -25, 25) : 0, .3f), angle.y, angle.z);
     }

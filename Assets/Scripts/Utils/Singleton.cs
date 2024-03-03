@@ -3,7 +3,7 @@ using UnityEngine;
 public class Singleton<T> : MonoBehaviour where T: MonoBehaviour{
     
     public static bool verbose = false;
-    public static bool keepAlive = true;
+    public bool keepAlive = true;
 
     private static T _instance = null;
     public static T instance {
