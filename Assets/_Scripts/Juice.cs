@@ -41,8 +41,8 @@ public class Juice : MonoBehaviour
             var statsManager = other.GetComponent<PlayerStatsManager>();
             statsManager.AddStamina(stamina);
             Debug.Log("drinking juice!");
-            AudioManager.instance.PlaySound("powerup1", 15f);
-            AudioManager.instance.PlaySound("dog_drink", 15f);
+            AudioManager.instance.PlaySoundImmediate("powerup1", 15f);
+            AudioManager.instance.PlaySoundImmediate("dog_drink", 15f);
             Destroy(gameObject);
         }
     }
